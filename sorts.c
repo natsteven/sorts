@@ -5,15 +5,26 @@
 
 static int SIZE = 16;
 
+void swap(int *a, int *b) {
+  int temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+void xor_swap(int *a, int *b) {
+  // a==b bug
+  *a ^= *b;
+  *b ^= *a;
+  *a ^= *b;
+}
+
 void bubble(int *array) {
   int swapped;
   for (int i=0; i < SIZE-1; i++) {
     swapped = 0;
     for (int j=0; j < SIZE-i-1; j++) {
       if (array[j] > array[j+1]) {
-        int temp = array[j];
-        array[j] = array[j+1];
-        array[j+1] = temp;
+        swap(&array[j],&array[j+1]);
         swapped = 1;
       }
     }
@@ -39,9 +50,7 @@ void selection(int *array) {
     for (int j=i+1; j < SIZE; j++)
       if (array[j] < array[min])
         min = j;
-    int temp = array[i];
-    array[i] = array[min];
-    array[min] = temp;
+    swap(&array[i], &array[min]);
   }
 }
 
@@ -80,8 +89,6 @@ void merge(int *array, int n) {
 void unsort(int *array) {
   for (int i=0; i < SIZE; i++) {
     int j = rand() % SIZE;
-    int temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+    swap(&array[i], &array[j]);
   }
 }
